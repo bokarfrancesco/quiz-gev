@@ -1,0 +1,20 @@
+{
+  "name": "Quiz GEV Legambiente",
+  "short_name": "QuizGEV",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#f2f2f2",
+  "theme_color": "#3498db",
+  "icons": [
+    {
+      "src": "https://bokarfrancesco.github.io/quiz-gev/quiz_icona_192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://bokarfrancesco.github.io/quiz-gev/quiz_icona_512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
