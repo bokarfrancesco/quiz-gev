@@ -1,7 +1,7 @@
 {
-  "name": "Quiz GEV Legambiente",
-  "short_name": "QuizGEV",
-  "start_url": "/index.html",
+  "name": "Quiz GEV",
+  "short_name": "Quiz GEV",
+  "start_url": "https://script.google.com/macros/s/TUO_DEPLOY_ID/exec",
   "display": "standalone",
   "background_color": "#f2f2f2",
   "theme_color": "#3498db",
@@ -18,3 +18,4 @@
     }
   ]
 }
+
