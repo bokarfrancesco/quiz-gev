@@ -2,53 +2,63 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Quiz GEV Legambiente Reggio Emilia</title>
 
-<!-- Manifest PWA -->
+<!-- PWA manifest -->
 <link rel="manifest" href="manifest.json">
 
-<!-- Icone iOS -->
-<link rel="apple-touch-icon" sizes="192x192" href="https://bokarfrancesco.github.io/quiz-gev/quiz_icona_192.png">
-<link rel="apple-touch-icon" sizes="512x512" href="https://bokarfrancesco.github.io/quiz-gev/quiz_icona_512.png">
-
-<!-- iOS Web App Meta -->
+<!-- Icone Apple -->
+<link rel="apple-touch-icon" sizes="192x192" href="quiz_icona_192.png">
+<link rel="apple-touch-icon" sizes="512x512" href="quiz_icona_512.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Quiz GEV">
 <meta name="theme-color" content="#3498db">
 
 <style>
-/* Copia qui tutto il tuo CSS del quiz */
-body{font-family:Arial,sans-serif;background:#f2f2f2;margin:0;padding:10px;color:#333;}
+body{font-family:Arial,sans-serif;font-size:clamp(14px,2.5vw,18px);background:#f2f2f2;margin:0;padding:10px;color:#333;}
 header{text-align:center;margin-bottom:15px;}
 header img{max-height:80px;display:block;margin:0 auto 10px;}
-h2{color:#2c3e50;font-size:2em;margin:5px 0;text-align:center;}
-.quiz-button, .submit-btn, #nextBtn, #prevBtn{padding:12px;font-size:18px;border:none;border-radius:10px;cursor:pointer;}
-.quiz-button{background:#3498db;color:white;} .quiz-button:hover{background:#2980b9;}
-.submit-btn{background:#27ae60;color:white;} .submit-btn:hover,#nextBtn:hover,#prevBtn:hover{background:#1e8449;}
-.question-box{background:white;border-radius:8px;padding:10px 15px;margin:8px 0;}
-.question-box b{display:block;margin-bottom:8px;font-size:1.1em;}
-.option{margin:6px 0;font-size:1em;padding:10px;border-radius:6px;border:1px solid #ccc;display:block;cursor:pointer;background:#fafafa;}
+h2{color:#2c3e50;font-size:clamp(1.5em,4vw,2em);margin:5px 0;text-align:center;}
+
+.quiz-button, .submit-btn, #nextBtn, #prevBtn {
+    padding: clamp(10px,2.5vw,14px);
+    font-size: clamp(16px,3vw,20px);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.quiz-button{background:#3498db;color:white;} 
+.quiz-button:hover{background:#2980b9;}
+.submit-btn{background:#27ae60;color:white;} 
+.submit-btn:hover,#nextBtn:hover,#prevBtn:hover{background:#1e8449;}
+
+.question-box{background:white;border-radius:8px;padding:10px 15px;margin:8px 0;line-height:1.4em;word-wrap:break-word;}
+.question-box b{display:block;margin-bottom:8px;font-size:clamp(1em,2.5vw,1.1em);}
+.option{margin:6px 0;font-size:clamp(0.9em,2.5vw,1.1em);padding:clamp(8px,2vw,12px);border-radius:6px;border:1px solid #ccc;display:block;cursor:pointer;background:#fafafa;}
 .option:hover{background:#e6f0ff;}
+
 #feedbackContainer{background:#ecf0f1;border-radius:10px;padding:12px;margin-top:15px;}
-#feedbackContainer p.message{font-weight:bold;font-size:1.2em;color:#27ae60;margin-top:10px;}
+#feedbackContainer p.message{font-weight:bold;font-size:clamp(1em,2.5vw,1.2em);color:#27ae60;margin-top:10px;}
 #infoMessage{background:#dff0d8;border-radius:8px;padding:10px;margin:8px 0;color:#3c763d;font-weight:bold;text-align:center;}
 .progress-bar{height:15px;background:#27ae60;border-radius:8px;margin:10px 0;width:0%;transition:width 0.3s;}
-.button-container { display: flex; justify-content: space-between; margin-top: 10px; max-width: 350px; margin-left: auto; margin-right: auto; gap: 10px; }
-.button-container.center { justify-content: center; }
-.button-container button { flex: 1; margin: 0 5px; }
-@media(max-width:500px){
-  h2{font-size:1.5em;}
-  .quiz-button,.submit-btn,#nextBtn,#prevBtn{font-size:16px;padding:10px;}
-  .question-box b{font-size:1em;}
-  .option{font-size:0.95em;padding:8px;}
+
+.button-container { display:flex; justify-content:space-between; margin-top:10px; max-width:350px; margin-left:auto; margin-right:auto; gap:10px;}
+.button-container.center { justify-content:center; }
+.button-container button { flex:1; margin:0 5px; }
+
+/* Landscape: pulsanti più grandi */
+@media (orientation: landscape) {
+    .quiz-button, .submit-btn, #nextBtn, #prevBtn {padding:16px 20px; font-size:22px;}
+    body{padding:5px;}
+    .question-box{font-size:clamp(12px,2vw,16px);}
 }
 </style>
 </head>
 <body>
 
 <header>
-  <img src="https://bokarfrancesco.github.io/quiz-gev/quiz_icona_192.png" alt="Legambiente Reggio Emilia" style="max-height:80px;">
+  <img src="quiz_icona_192.png" alt="Legambiente Reggio Emilia">
   <h2>Quiz GEV WebApp Legambiente Reggio Emilia</h2>
 </header>
 
@@ -64,7 +74,6 @@ h2{color:#2c3e50;font-size:2em;margin:5px 0;text-align:center;}
 <div id="feedbackContainer"></div>
 
 <script>
-/* Copia qui tutto il tuo JS del quiz */
 let currentMode="", currentQuestions=[], currentIndex=0, userAnswers=[];
 
 function startQuiz(mode){
@@ -81,75 +90,48 @@ function startQuiz(mode){
 }
 
 function renderQuestion(){
-  let container=document.getElementById("quizContainer"); 
-  container.innerHTML="";
-  if(currentIndex<currentQuestions.length){
-    let q=currentQuestions[currentIndex];
-    let div=document.createElement("div"); 
-    div.className="question-box";
-    let html=`<b>${q.question}</b>`;
-    q.options.forEach(opt=>{
-      html+=`<label class="option"><input type="radio" name="q" value="${opt}"> ${opt}</label>`;
-    });
-    div.innerHTML=html; 
-    container.appendChild(div);
+  const container=document.getElementById("quizContainer"); container.innerHTML="";
+  if(currentIndex>=currentQuestions.length) return;
 
-    let btnContainer = document.createElement("div");
-    if(currentIndex === 0){ 
-      btnContainer.className = "button-container center";
-      let nextBtn = document.createElement("button");
-      nextBtn.id = "nextBtn"; nextBtn.innerText = "Avanti"; nextBtn.onclick = nextQuestion;
-      btnContainer.appendChild(nextBtn);
-    } else if(currentIndex === currentQuestions.length - 1){ 
-      btnContainer.className = "button-container";
-      let prevBtn = document.createElement("button");
-      prevBtn.id = "prevBtn"; prevBtn.innerText = "Indietro"; prevBtn.onclick = prevQuestion;
-      btnContainer.appendChild(prevBtn);
-      let finishBtn = document.createElement("button");
-      finishBtn.id = "nextBtn"; finishBtn.innerText = "Termina e Invia"; finishBtn.onclick = showResults;
-      btnContainer.appendChild(finishBtn);
-    } else { 
-      btnContainer.className = "button-container";
-      let prevBtn = document.createElement("button");
-      prevBtn.id = "prevBtn"; prevBtn.innerText = "Indietro"; prevBtn.onclick = prevQuestion;
-      btnContainer.appendChild(prevBtn);
-      let nextBtn = document.createElement("button");
-      nextBtn.id = "nextBtn"; nextBtn.innerText = "Avanti"; nextBtn.onclick = nextQuestion;
-      btnContainer.appendChild(nextBtn);
-    }
-    container.appendChild(btnContainer);
-    document.getElementById("progressBar").style.width=((currentIndex)/currentQuestions.length)*100+"%";
-  }
+  const q=currentQuestions[currentIndex];
+  let div=document.createElement("div"); div.className="question-box";
+  div.innerHTML=`<b>${q.question}</b>` + q.options.map(opt=>`<label class="option"><input type="radio" name="q" value="${opt}"> ${opt}</label>`).join("");
+  container.appendChild(div);
+
+  const btnContainer=document.createElement("div"); btnContainer.className=(currentIndex===0||currentIndex===currentQuestions.length-1)?"button-container center":"button-container";
+
+  if(currentIndex>0){ let prevBtn=document.createElement("button"); prevBtn.innerText="Indietro"; prevBtn.onclick=prevQuestion; btnContainer.appendChild(prevBtn);}
+  let nextBtn=document.createElement("button"); 
+  nextBtn.innerText=(currentIndex===currentQuestions.length-1)?"Termina e Invia":"Avanti";
+  nextBtn.onclick=(currentIndex===currentQuestions.length-1)?showResults:nextQuestion;
+  btnContainer.appendChild(nextBtn);
+
+  container.appendChild(btnContainer);
+  document.getElementById("progressBar").style.width=(currentIndex/currentQuestions.length*100)+"%";
 }
 
-function nextQuestion(){ saveAnswer(); currentIndex++; renderQuestion(); }
-function prevQuestion(){ saveAnswer(); currentIndex--; renderQuestion(); }
+function nextQuestion(){ saveAnswer(); currentIndex++; renderQuestion();}
+function prevQuestion(){ saveAnswer(); currentIndex--; renderQuestion();}
 function saveAnswer(){
-  let radios=document.getElementsByName("q"), selected="";
-  for(let r of radios) if(r.checked) selected=r.value;
-  userAnswers[currentIndex]=selected||"";
+  const selected=document.querySelector('input[name="q"]:checked');
+  userAnswers[currentIndex]=selected?selected.value:"";
 }
 function showResults(){
   saveAnswer();
-  let email=document.getElementById("emailField")?document.getElementById("emailField").value:"";
-  google.script.run.withSuccessHandler(showFeedback).submitAttempt({answers:userAnswers,questions:currentQuestions,email:email,mode:currentMode});
+  const emailField=document.getElementById("emailField");
+  const email=emailField?emailField.value:"";
+  google.script.run.withSuccessHandler(showFeedback).submitAttempt({answers:userAnswers,questions:currentQuestions,email,mode:currentMode});
 }
+
 function showFeedback(data){
   if(data.error){alert(data.error);return;}
-  let fc=document.getElementById("feedbackContainer");
   let html="<h3>Feedback:</h3>";
-  data.feedback.forEach(f=>{
-    html+=`<div class="question-box"><b>${f.question}</b>`;
-    html+=`Risposta corretta: <b>${f.correct}</b><br>`;
-    html+=`Tua risposta: ${f.userAnswer||"(nessuna)"}<br>`;
-    html+=f.isCorrect ? "✅ Corretto" : "❌ Sbagliato";
-    html+="</div>";
-  });
+  data.feedback.forEach(f=>html+=`<div class="question-box"><b>${f.question}</b>Risposta corretta: <b>${f.correct}</b><br>Tua risposta: ${f.userAnswer||"(nessuna)"}<br>${f.isCorrect?"✅ Corretto":"❌ Sbagliato"}</div>`);
   html+=`<b>Punteggio:</b> ${data.correctCount}/${currentQuestions.length}<br>`;
   html+=`<p class="message">${data.message}</p>`;
   html+='<button class="quiz-button" onclick="startQuiz(currentMode)">Ripeti Test</button>';
   document.getElementById("quizContainer").innerHTML="";
-  fc.innerHTML=html;
+  const fc=document.getElementById("feedbackContainer"); fc.innerHTML=html;
   fc.scrollIntoView({behavior:"smooth"});
   document.getElementById("progressBar").style.width="100%";
 }
